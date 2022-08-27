@@ -43,10 +43,6 @@ p {
   margin: 0;
 }
 
-.reply-desk {
-  display: none;
-}
-
 /*COMENTARIOS*/
 
 .items {
@@ -84,7 +80,8 @@ p {
     font-weight: 500;
   }
 }
-.reply-movil {
+.reply-movil,
+.reply-desk {
   font-weight: 500;
   color: var(--Moderate-blue);
 }
@@ -92,4 +89,19 @@ p {
 .boton-reply {
   background: var(--Moderate-blue);
   color: var(--White);
+  max-height: 35px;
+}
+
+.input-reply {
+  height: 100px;
+}
+
+.input-reply {
+  flex: 1 0 100%;
+}
+
+@media (min-width: 768px) {
+  .input-reply {
+    flex: 1 1 auto;
+  }
 }
