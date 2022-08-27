@@ -103,6 +103,11 @@ p {
           flex: 1 0 100%;
 }
 
+.remitente {
+  color: var(--Moderate-blue);
+  font-weight: 500;
+}
+
 @media (min-width: 768px) {
   .input-reply {
     -webkit-box-flex: 1;
