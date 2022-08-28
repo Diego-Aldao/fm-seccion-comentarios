@@ -5,7 +5,7 @@ const checkearRespuestas = (comentario) => {
   let texto = "";
   console.log(respuestas);
   respuestas.map((respuesta) => {
-    texto += `<div class="reply-estatica my-4 ms-4">
+    texto += `<div class="reply-estatica comentario my-4 ms-4">
     <div class="info-comentario p-3 rounded d-md-flex flex-row-reverse">
     <div class="contenedor-info">
       <div class="persona d-flex align-items-center mb-3">
@@ -14,7 +14,7 @@ const checkearRespuestas = (comentario) => {
         </div>
         <p class="nombre-persona mx-3">${respuesta.user.username}</p>
         <p class="fecha-post">${respuesta.createdAt}</p>
-        <p class="reply-desk d-none d-md-block text-capitalize ms-auto">
+        <p class="reply-desk reply d-none d-md-block text-capitalize ms-auto">
           <svg width="14" height="13" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z"
@@ -51,7 +51,7 @@ const checkearRespuestas = (comentario) => {
             />
           </svg>
         </div>
-        <p class="reply-movil text-capitalize d-md-none">
+        <p class="reply-movil reply text-capitalize d-md-none">
           <svg width="14" height="13" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z"
@@ -76,7 +76,7 @@ const checkearRespuestas = (comentario) => {
 };
 const setearComentarios = (comentarios, usuarioActual) => {
   comentarios.map((comentario) => {
-    contenedor.innerHTML += `<div class="items col-12 mb-4">
+    contenedor.innerHTML += `<div class="items comentario col-12 mb-4">
     <div class="main-comentario">
     <div class="info-comentario p-3 rounded d-md-flex flex-row-reverse">
       <div class="contenedor-info">
@@ -86,7 +86,7 @@ const setearComentarios = (comentarios, usuarioActual) => {
           </div>
           <p class="nombre-persona mx-3">${comentario.user.username}</p>
           <p class="fecha-post">${comentario.createdAt}</p>
-          <p class="reply-desk d-none d-md-block text-capitalize ms-auto">
+          <p class="reply-desk reply d-none d-md-block text-capitalize ms-auto">
             <svg
               width="14"
               height="13"
@@ -127,7 +127,7 @@ const setearComentarios = (comentarios, usuarioActual) => {
             />
           </svg>
         </div>
-        <p class="reply-movil text-capitalize d-md-none">
+        <p class="reply-movil reply text-capitalize d-md-none">
           <svg width="14" height="13" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z"
@@ -154,13 +154,30 @@ const setearComentarios = (comentarios, usuarioActual) => {
   });
 };
 
+const mostrarReply = (boton) => {
+  const padreBoton = boton.closest(".comentario");
+  const replyActual = padreBoton.lastElementChild;
+  replyActual.classList.toggle("d-none");
+  replyActual.firstElementChild.focus();
+};
+
+const obtenerBotones = () => {
+  const botonesReply = document.querySelectorAll(".reply");
+  botonesReply.forEach((boton) => {
+    boton.addEventListener("click", () => {
+      mostrarReply(boton);
+    });
+  });
+};
+
 const manipularData = (data) => {
   const { currentUser, comments } = data;
   setearComentarios(comments, currentUser);
+  obtenerBotones();
 };
 
 const obtenerData = () => {
-  fetch("./data.json")
+  fetch("http://localhost:3000")
     .then((response) => response.json())
     .then((json) => manipularData(json));
 };
